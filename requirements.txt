@@ -1,0 +1,13 @@
+flask~=1.1.2
+psutil~=5.7.2
+pip~=20.2.2
+Jinja2~=2.11.2
+Werkzeug~=1.0.1
+itsdangerous~=1.1.0
+click~=7.1.2
+MarkupSafe~=1.1.1
+setuptools~=49.6.0
+py-cpuinfo~=7.0.0
+tailhead~=1.0.2
+flask-fontawesome
+flask-socketio

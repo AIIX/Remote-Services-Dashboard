@@ -1,0 +1,21 @@
+.statusticked {
+    color: green;
+}
+
+.statusunticked {
+    color: red;
+}
+
+hr{
+    height: 1px;
+    background-color: #375a7f;
+    border: none;
+}
+
+.custom_toast_item{
+  position: absolute;
+  top: 80px;
+  left: 1;
+  width: 350px;
+  height: 120px;
+}
