@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd /home/$USER/mycroft-core
+cd /usr/bin/
 bash stop-mycroft.sh
-bash start-mycroft.sh  all
+bash start-mycroft.sh

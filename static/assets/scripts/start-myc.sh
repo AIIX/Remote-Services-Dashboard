@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /home/$USER/mycroft-core
-bash start-mycroft.sh all
+cd /usr/bin/
+bash start-mycroft.sh

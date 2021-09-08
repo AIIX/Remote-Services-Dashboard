@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html id="enclosure_log_html">
+<head>
+    {{ fontawesome_html() }}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+    <title>Mycroft Remote Services Dashboard</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static',     filename='css/bootstrap.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ url_for('static',     filename='css/log.css') }}">
+    <script src="{{ url_for('static',     filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',     filename='js/jquery.serialize-object.min.js') }}"></script>
+    <script src="{{ url_for('static',     filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',     filename='js/sockets/socket.io.js') }}"></script>
+    <script src="{{ url_for('static',     filename='js/skiller.js') }}"></script>
+    <script type="text/javascript" charset="utf-8">
+            var socket = null;
+            var skills_model_local;
+            var submit_settings_url;
+
+            $(document).ready(function(){
+                socket = io.connect('http://' + document.domain + ':' + location.port)
+                socket.emit('collect_skills_model')
+                socket.on('skills_model_changed', function(msg, cb){
+                    skills_model_local = msg.data
+                    generateSkillDisplay(skills_model_local)
+                })
+                submit_settings_url = "{{ url_for('on_skill_settings_changed') }}"
+            })
+
+    </script>
+    <!-- Custom styles for this template -->
+    <!-- <link href="narrow-jumbotron.css" rel="stylesheet"> -->
+    <style>
+        .accord-header-link:after {
+              content: "\f107";
+              font-family: 'Font Awesome 5 Free';
+              float: right;
+              vertical-align: middle;
+        }
+        .check-scale-type {
+            scale: 2;
+            margin-left: -40px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header clearfix">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">OVOS Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logging">Logging</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/docs/rs/introduction">Documentation</a>-->
+<!--                </li>-->
+                <li class="nav-item active">
+                    <a class="nav-link" href="/skills-settings"><span class="sr-only">(current)</span>Skills
+                        Settings</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="card-header bg-info"><h3 id="skills_page_header" class="font-weight-bold text-uppercase">Configure Your
+    Skills</h3></div>
+<div id="skills_accordion" class="mt-2"></div>
+</body>
+</html>

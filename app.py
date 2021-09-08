@@ -19,15 +19,18 @@ import os
 import cpuinfo
 import psutil
 import subprocess
+import json
 from flask import Flask, render_template, jsonify, request, make_response
 from flask_fontawesome import FontAwesome
 from flask_socketio import SocketIO, emit
+from flask_simplelogin import SimpleLogin, login_required
 
 from lthreads.buslogthread import BusLogThread
 from lthreads.skilllogthread import SkillLogThread
 from lthreads.audiologthread import AudioLogThread
 from lthreads.voicelogthread import VoiceLogThread
 from lthreads.enclosurelogthread import EnclosureLogThread
+from lthreads.skillmodelbuilderthread import SkillModelBuilderThread
 
 
 app = Flask(__name__)
@@ -39,9 +42,12 @@ sk_thread = SkillLogThread()
 au_thread = AudioLogThread()
 vu_thread = VoiceLogThread()
 enc_thread = EnclosureLogThread()
+sm_thread = SkillModelBuilderThread()
+app.config['SECRET_KEY'] = '0V0$D@$HB0RD'
 
 
 @app.route("/")
+@login_required
 def home():
     return render_template("index.html")
 
@@ -51,27 +57,38 @@ def test_message(message):
     emit('my response', {'data': 'got it!'})
 
 
+@app.route("/skills-settings")
+@login_required()
+def dashskilllocalsettings():
+    return render_template("skills-settings.html")
+
+
 @app.route("/logging")
+@login_required
 def dashlog():
     return render_template("log.html")
 
 
 @app.route("/docs/rs/introduction")
+@login_required
 def dashdocintro():
     return render_template("rs-intro.html")
 
 
 @app.route("/docs/rs/connection-guide")
+@login_required
 def dashdocconnect():
     return render_template("rs-connection.html")
 
 
 @app.route("/docs/rs/dashboard-guide")
+@login_required
 def dashdocdash():
     return render_template("rs-dashboard.html")
 
 
 @app.route("/logging/messsagebus")
+@login_required
 def show_bus_log():
     resp = make_response(render_template("bus.html"))
     resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -83,6 +100,7 @@ def show_bus_log():
 
 
 @app.route("/logging/skills")
+@login_required
 def show_skills_log():
     resp = make_response(render_template("skills.html"))
     resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -94,6 +112,7 @@ def show_skills_log():
 
 
 @app.route("/logging/audio")
+@login_required
 def show_audio_log():
     resp = make_response(render_template("audio.html"))
     resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -105,6 +124,7 @@ def show_audio_log():
 
 
 @app.route("/logging/voice")
+@login_required
 def show_voice_log():
     resp = make_response(render_template("voice.html"))
     resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -116,6 +136,7 @@ def show_voice_log():
 
 
 @app.route("/logging/enclosure")
+@login_required
 def show_enclosure_log():
     resp = make_response(render_template("enclosure.html"))
     resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -209,6 +230,23 @@ def handle_connect_event(json):
         print("unknown log display requested")
 
 
+@socketio.on('collect_skills_model')
+def handle_collect_skills_model_event():
+    print("collecting skills model")
+    sm_thread.run()
+
+
+@app.route('/skill_settings_changed', methods=['POST'])
+def on_skill_settings_changed():
+    form_request = request.form.to_dict()
+    form_skill_name = form_request["skill_name"]
+    build_json_response = json.loads(form_request["form_data"])
+    print(form_skill_name, build_json_response)
+
+    # TODO: Make Save Settings Work After Getting Response
+    return jsonify(Success=True)
+
+
 @app.route('/logging/_close_log', methods=['POST'])
 def logging_close_log():
     prequest = request.form.to_dict()
@@ -241,7 +279,6 @@ def control_myc():
     if proc_cmd == "start":
         command = os.path.join(os.path.dirname(__file__) + "/static/assets/scripts/start-myc.sh")
         subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=None)
-
     elif proc_cmd == "stop":
         command = os.path.join(os.path.dirname(__file__) + "/static/assets/scripts/stop-myc.sh")
         subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=None)
@@ -256,4 +293,5 @@ def control_myc():
 
 if __name__ == "__main__":
     # app.run(debug=True)
-    socketio.run(app, debug=True)
+    SimpleLogin(app)
+    socketio.run(app, host="0.0.0.0", debug=True)

@@ -1,251 +1,293 @@
-
-
 <!DOCTYPE html>
 <html>
-   <head>
-      {{ fontawesome_html() }}
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <link rel="icon" href="{{ url_for('static',     filename='favicon.ico') }}">
-      <title>Mycroft Remote Services Dashboard</title>
-      <!-- Bootstrap core CSS -->
-      <link rel="stylesheet" href="{{ url_for('static',     filename='css/bootstrap.css') }}" media="screen">
-      <link rel="stylesheet" href="{{ url_for('static',     filename='css/main.css') }}">
-      <script src="{{ url_for('static',     filename='js/jquery.min.js') }}"></script>
-      <script src="{{ url_for('static',     filename='js/bootstrap.min.js') }}"></script>
-      <script src="{{ url_for('static',     filename='js/resource.js') }}"></script>
-      <!-- Custom styles for this template -->
-      <!-- <link href="narrow-jumbotron.css" rel="stylesheet"> -->
-<script>
-$(document).ready(function(){
-    $(".toast").toast('show');
-});
-</script>
-   </head>
-   <body>
-      <div class="header clearfix">
-         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Remote Services Dashboard</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+<head>
+    {{ fontawesome_html() }}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{{ url_for('static',     filename='favicon.ico') }}">
+    <title>Mycroft Remote Services Dashboard</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static',     filename='css/bootstrap.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ url_for('static',     filename='css/main.css') }}">
+    <script src="{{ url_for('static',     filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',     filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',     filename='js/resource.js') }}"></script>
+    <!-- Custom styles for this template -->
+    <!-- <link href="narrow-jumbotron.css" rel="stylesheet"> -->
+    <!--    <script>-->
+    <!--    $(document).ready(function(){-->
+    <!--        $(".toast").toast('show');-->
+    <!--    });-->
+    <!--    </script>-->
+</head>
+<body>
+<div class="header clearfix">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">OVOS Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor02">
-               <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                     <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="/logging">Logging</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="/docs/rs/introduction">Documentation</a>
-                  </li>
-               </ul>
-            </div>
-         </nav>
-      </div>
-      <div class="container">
-         <br>
-         <h4 style="">Container Statistics<br></h4>
-         <hr style="">
-         <div class="row" style="">
-            <div class="col">
-               <div class="card text-white bg-info mb-3">
-                  <div class="card-header">Memory Usage</div>
-                  <div class="card-body">
-                     <div class="row">
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logging">Logging</a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/docs/rs/introduction">Documentation</a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="/skills-settings">Skills Settings</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <br>
+    <h4 style="">Device Statistics<br></h4>
+    <hr style="">
+    <div class="row" style="">
+        <div class="col">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Memory Usage</div>
+                <div class="card-body">
+                    <div class="row">
                         <span class="col fas fa-memory fa-8x" style="color:white"></span>
                         <h2 id="mem_area" class="col align-self-center">{{ get_current_mem_usage }}</h2>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-               <div class="card text-white bg-danger mb-3">
-                  <div class="card-header">CPU Usage</div>
-                  <div class="card-body">
-                     <div class="row">
+        </div>
+        <div class="col">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">CPU Usage</div>
+                <div class="card-body">
+                    <div class="row">
                         <span class="col fas fa-microchip fa-8x" style="color:white"></span>
                         <h2 id="cpu_area" class="col align-self-center">{{ get_current_cpu_usage }}</h2>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-               <div class="card text-white bg-warning mb-3">
-                  <div class="card-header">Storage Usage</div>
-                  <div class="card-body">
-                     <div class="row">
+        </div>
+        <div class="col">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Storage Usage</div>
+                <div class="card-body">
+                    <div class="row">
                         <span class="col fas fa-hdd fa-8x" style="color:white"></span>
                         <h2 id="storage_area" class="col align-self-center">{{ get_current_storage_usage }}</h2>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
-         </div>
-         <hr style="">
-         <h4>Manage Your Mycroft Core Instance<br></h4>
-         <hr style="">
-         <br>
-         <div class="row marketing">
-            <div class="col-lg-6">
-               <div class="alert alert-dismissible alert-warning">
-                  <h4 class="alert-heading">Warning:<br></h4>
-                  <p class="mb-0"><i>Mycroft Core Remote Services have no built-in security measures by default. We strongly recommend that you
-                     do not expose the services and ports outside a secure LAN/PAN unless you
-                     have other security measures in place.</i>
-                  </p>
-               </div>
-               <div class="row" style="margin-right: 0px;">
-                  <div class="col-md-4">
-                     <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('start')" style="">Start Mycroft Core</button>
-                  </div>
-                  <div class="col-md-4">
-                     <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('stop')" style="">Stop Mycroft Core</button>
-                  </div>
-                  <div class="col-md-4">
-                     <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('restart')" style="">Restart Mycroft Core</button>
-                  </div>
-               </div>
-               <br>
-               <div class="card mb-3">
-                  <h4 class="card-header">System Information</h4>
-                  <ul class="list-group list-group-flush">
-                     <li id="sys_info_platform" class="list-group-item">-</li>
-                     <li id="sys_info_processor" class="list-group-item">-</li>
-                     <li id="sys_info_local_ip" class="list-group-item">-</li>
-                  </ul>
-               </div>
+        </div>
+    </div>
+    <hr style="">
+    <h4>Manage Your Mycroft Core Instance<br></h4>
+    <hr style="">
+    <br>
+    <div class="row marketing">
+        <div class="col-lg-6">
+            <div class="alert alert-dismissible alert-warning">
+                <h4 class="alert-heading">Warning:<br></h4>
+                <p class="mb-0"><i>Mycroft Core Remote Services have no built-in security measures by default. We
+                    strongly recommend that you
+                    do not expose the services and ports outside a secure LAN/PAN unless you
+                    have other security measures in place.</i>
+                </p>
             </div>
-            <div class="col-lg-6" spellcheckker="false" contenteditable="true">
-               <div class="card mb-3">
-                  <h4 class="card-header">Mycroft Core Services<br></h4>
-                  <div class="card-body">
-                     <div class="row" style="">
+            <div class="row" style="margin-right: 0px;">
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('start')" style="">
+                        Start Mycroft Core
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('stop')" style="">Stop
+                        Mycroft Core
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('restart')" style="">
+                        Restart Mycroft Core
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div class="card mb-3">
+                <h4 class="card-header">System Information</h4>
+                <ul class="list-group list-group-flush">
+                    <li id="sys_info_platform" class="list-group-item">-</li>
+                    <li id="sys_info_processor" class="list-group-item">-</li>
+                    <li id="sys_info_local_ip" class="list-group-item">-</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6" spellcheckker="false" contenteditable="true">
+            <div class="card mb-3">
+                <h4 class="card-header">Mycroft Core Services<br></h4>
+                <div class="card-body">
+                    <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                           <h6 class="text-danger">Service</h6>
+                            <h6 class="text-danger">Service</h6>
                         </div>
                         <div class="col d-flex justify-content-center">
-                           <h6 class="text-danger">Status</h6>
+                            <h6 class="text-danger">Status</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                           <h6 class="text-danger">PID</h6>
+                            <h6 class="text-danger">PID</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                           <h6 class="text-danger">Actions</h6>
+                            <h6 class="text-danger">Actions</h6>
                         </div>
-                     </div>
-                     <hr style="">
-                     <div class="row" style="">
+                    </div>
+                    <hr style="">
+                    <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                           <h6 spellcheckker="false">Mycroft Messagebus</h6>
+                            <h6 spellcheckker="false">Mycroft Messagebus</h6>
                         </div>
-                        <div class="col d-flex justify-content-center"><i id="status-messagebus" class="fa fa-times statusunticked" aria-hidden="true"></i></div>
+                        <div class="col d-flex justify-content-center"><i id="status-messagebus"
+                                                                          class="fa fa-times statusunticked"
+                                                                          aria-hidden="true"></i></div>
                         <div class="col d-flex justify-content-start">
-                           <h6 id="messagebus-pid">NA</h6>
-                        </div>
-                        <div class="col d-flex justify-content-start">
-                           <div class="row">
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh" onclick="check_messagebus_service_status_m()"><i class="fas fa-sync" style="color: #3498db"></i></button>
-                              <div style="width: 2px"></div>
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                           </div>
-                        </div>
-                     </div>
-                     <hr style="">
-                     <div class="row" style="">
-                        <div class="col d-flex justify-content-start">
-                           <h6>Mycroft Skills</h6>
-                        </div>
-                        <div class="col d-flex justify-content-center"><i id="status-skills" class="fa fa-times statusunticked" aria-hidden="true"></i></div>
-                        <div class="col d-flex justify-content-start">
-                           <h6 id="skill-pid">NA</h6>
+                            <h6 id="messagebus-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                           <div class="row">
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh" onclick="check_skills_service_status_m()"><i class="fas fa-sync" style="color: #3498db"></i></button>
-                              <div style="width: 2px"></div>
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                           </div>
+                            <div class="row">
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
+                                        onclick="check_messagebus_service_status_m()"><i class="fas fa-sync"
+                                                                                         style="color: #3498db"></i>
+                                </button>
+                                <div style="width: 2px"></div>
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
+                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
+                            </div>
                         </div>
-                     </div>
-                     <hr style="">
-                     <div class="row" style="">
+                    </div>
+                    <hr style="">
+                    <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                           <h6>Mycroft Audio</h6>
+                            <h6>Mycroft Skills</h6>
                         </div>
-                        <div class="col d-flex justify-content-center"><i id="status-audio" class="fa fa-times statusunticked" aria-hidden="true"></i></div>
+                        <div class="col d-flex justify-content-center"><i id="status-skills"
+                                                                          class="fa fa-times statusunticked"
+                                                                          aria-hidden="true"></i></div>
                         <div class="col d-flex justify-content-start">
-                           <h6 id="audio-pid">NA</h6>
-                        </div>
-                        <div class="col d-flex justify-content-start">
-                           <div class="row">
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh" onclick="check_audio_service_status_m()"><i class="fas fa-sync" style="color: #3498db"></i></button>
-                              <div style="width: 2px"></div>
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                           </div>
-                        </div>
-                     </div>
-                     <hr style="">
-                     <div class="row" style="">
-                        <div class="col d-flex justify-content-start">
-                           <h6>Mycroft Voice</h6>
-                        </div>
-                        <div class="col d-flex justify-content-center"><i id="status-voice" class="fa fa-times statusunticked" aria-hidden="true"></i></div>
-                        <div class="col d-flex justify-content-start">
-                           <h6 id="voice-pid">NA</h6>
+                            <h6 id="skill-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                           <div class="row">
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh" onclick="check_voice_service_status_m()"><i class="fas fa-sync" style="color: #3498db"></i></button>
-                              <div style="width: 2px"></div>
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                           </div>
+                            <div class="row">
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
+                                        onclick="check_skills_service_status_m()"><i class="fas fa-sync"
+                                                                                     style="color: #3498db"></i>
+                                </button>
+                                <div style="width: 2px"></div>
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
+                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
+                            </div>
                         </div>
-                     </div>
-                     <hr style="">
-                     <div class="row" style="">
+                    </div>
+                    <hr style="">
+                    <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                           <h6>Mycroft Enclosure</h6>
+                            <h6>Mycroft Audio</h6>
                         </div>
-                        <div class="col d-flex justify-content-center"><i id="status-enclosure" class="fa fa-times statusunticked" aria-hidden="true"></i></div>
+                        <div class="col d-flex justify-content-center"><i id="status-audio"
+                                                                          class="fa fa-times statusunticked"
+                                                                          aria-hidden="true"></i></div>
                         <div class="col d-flex justify-content-start">
-                           <h6 id="enclosure-pid">NA</h6>
+                            <h6 id="audio-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                           <div class="row">
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh" onclick="check_enclosure_service_status_m()"><i class="fas fa-sync" style="color: #3498db"></i></button>
-                              <div style="width: 2px"></div>
-                              <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                           </div>
+                            <div class="row">
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
+                                        onclick="check_audio_service_status_m()"><i class="fas fa-sync"
+                                                                                    style="color: #3498db"></i></button>
+                                <div style="width: 2px"></div>
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
+                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
+                            </div>
                         </div>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                    <hr style="">
+                    <div class="row" style="">
+                        <div class="col d-flex justify-content-start">
+                            <h6>Mycroft Voice</h6>
+                        </div>
+                        <div class="col d-flex justify-content-center"><i id="status-voice"
+                                                                          class="fa fa-times statusunticked"
+                                                                          aria-hidden="true"></i></div>
+                        <div class="col d-flex justify-content-start">
+                            <h6 id="voice-pid">NA</h6>
+                        </div>
+                        <div class="col d-flex justify-content-start">
+                            <div class="row">
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
+                                        onclick="check_voice_service_status_m()"><i class="fas fa-sync"
+                                                                                    style="color: #3498db"></i></button>
+                                <div style="width: 2px"></div>
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
+                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="">
+                    <div class="row" style="">
+                        <div class="col d-flex justify-content-start">
+                            <h6>Mycroft Enclosure</h6>
+                        </div>
+                        <div class="col d-flex justify-content-center"><i id="status-enclosure"
+                                                                          class="fa fa-times statusunticked"
+                                                                          aria-hidden="true"></i></div>
+                        <div class="col d-flex justify-content-start">
+                            <h6 id="enclosure-pid">NA</h6>
+                        </div>
+                        <div class="col d-flex justify-content-start">
+                            <div class="row">
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
+                                        onclick="check_enclosure_service_status_m()"><i class="fas fa-sync"
+                                                                                        style="color: #3498db"></i>
+                                </button>
+                                <div style="width: 2px"></div>
+                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
+                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-         <!-- /container -->
-         <br>
-         <br>
-         <br>
-         <footer class="footer">
-            <p>Copyright © 2020 by Aditya Mehra &lt;aix.m@outlook.com&gt;</p>
-         </footer>
-      </div>
-<div role="alert" aria-live="assertive" aria-atomic="true" class="toast custom_toast_item" data-delay="6000">
-  <div class="toast-header bg-danger">
-    <strong class="text-white mr-auto">Your First Time ?</strong>
-    <small class="text-white">Just Now</small>
-    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="toast-body">
-    Read the documentation on getting started ! <a href="/docs/rs/connection-guide">Connection Guide</a>
-  </div>
+        </div>
+    </div>
+    <!-- /container -->
+    <br>
+    <br>
+    <br>
+    <footer class="footer">
+        <p>Copyright © 2021 by OpenVoice OS</p>
+    </footer>
 </div>
-   </body>
+<!--<div role="alert" aria-live="assertive" aria-atomic="true" class="toast custom_toast_item" data-delay="6000">-->
+<!--    <div class="toast-header bg-danger">-->
+<!--        <strong class="text-white mr-auto">Your First Time ?</strong>-->
+<!--        <small class="text-white">Just Now</small>-->
+<!--        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">-->
+<!--            <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--    <div class="toast-body">-->
+<!--        Read the documentation on getting started ! <a href="/docs/rs/connection-guide">Connection Guide</a>-->
+<!--    </div>-->
+<!--</div>-->
+</body>
 </html>
 

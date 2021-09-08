@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /home/$USER/mycroft-core
+cd /usr/bin/
 bash stop-mycroft.sh
