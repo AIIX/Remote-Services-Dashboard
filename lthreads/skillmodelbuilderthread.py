@@ -32,7 +32,7 @@ class SkillModelBuilderThread(threading.Thread):
 
     def run(self):
         self.skills_model.clear()
-        skills_folder_path = "/opt/mycroft/skills/"  # environ['MYCROFT_SKILLS_LOCATION']
+        skills_folder_path = environ['MYCROFT_SKILLS_LOCATION']
         subfolders = [f.path for f in scandir(skills_folder_path) if f.is_dir()]
         skill_settings_file = "settingsmeta.json"
         for folder in subfolders:

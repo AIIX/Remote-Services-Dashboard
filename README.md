@@ -3,6 +3,7 @@
 # Installation & Startup Steps
 
 ``` bash
+export MYCROFT_SKILLS_LOCATION="your skills folder location"
 git clone https://github.com/openvoiceos/ovos-dashboard
 cd ovos-dashboard
 python3 -m venv .venv
