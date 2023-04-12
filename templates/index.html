@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="{{ url_for('static',     filename='favicon.ico') }}">
-    <title>Mycroft Remote Services Dashboard</title>
+    <title>Remote Services Dashboard</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ url_for('static',     filename='css/bootstrap.css') }}" media="screen">
     <link rel="stylesheet" href="{{ url_for('static',     filename='css/main.css') }}">
@@ -25,7 +25,7 @@
 <body>
 <div class="header clearfix">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">OVOS Dashboard</a>
+        <a class="navbar-brand" href="#">Dashboard</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
                 aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -33,14 +33,8 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logging">Logging</a>
-                </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/docs/rs/introduction">Documentation</a>-->
-<!--                </li>-->
                 <li class="nav-item">
                     <a class="nav-link" href="/skills-settings">Skills Settings</a>
                 </li>
@@ -93,36 +87,36 @@
         </div>
     </div>
     <hr style="">
-    <h4>Manage Your Mycroft Core Instance<br></h4>
+    <h4>Your Core Instance<br></h4>
     <hr style="">
     <br>
     <div class="row marketing">
         <div class="col-lg-6">
             <div class="alert alert-dismissible alert-warning">
                 <h4 class="alert-heading">Warning:<br></h4>
-                <p class="mb-0"><i>Mycroft Core Remote Services have no built-in security measures by default. We
+                <p class="mb-0"><i>Core Remote Services have no built-in security measures by default. We
                     strongly recommend that you
                     do not expose the services and ports outside a secure LAN/PAN unless you
                     have other security measures in place.</i>
                 </p>
             </div>
-            <div class="row" style="margin-right: 0px;">
+            <!-- <div class="row" style="margin-right: 0px;">
                 <div class="col-md-4">
                     <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('start')" style="">
-                        Start Mycroft Core
+                        Start Core
                     </button>
                 </div>
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('stop')" style="">Stop
-                        Mycroft Core
+                    <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('stop')" style="">
+                        Stop Core
                     </button>
                 </div>
                 <div class="col-md-4">
                     <button type="button" class="btn btn-primary btn-lg" onclick="run_myc_process('restart')" style="">
-                        Restart Mycroft Core
+                        Restart Core
                     </button>
                 </div>
-            </div>
+            </div> -->
             <br>
             <div class="card mb-3">
                 <h4 class="card-header">System Information</h4>
@@ -133,9 +127,9 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-6" spellcheckker="false" contenteditable="true">
+        <div class="col-lg-6" spellcheckker="false" contenteditable="false">
             <div class="card mb-3">
-                <h4 class="card-header">Mycroft Core Services<br></h4>
+                <h4 class="card-header">Core Services<br></h4>
                 <div class="card-body">
                     <div class="row" style="">
                         <div class="col d-flex justify-content-start">
@@ -154,7 +148,7 @@
                     <hr style="">
                     <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                            <h6 spellcheckker="false">Mycroft Messagebus</h6>
+                            <h6 spellcheckker="false">Messagebus</h6>
                         </div>
                         <div class="col d-flex justify-content-center"><i id="status-messagebus"
                                                                           class="fa fa-times statusunticked"
@@ -163,21 +157,16 @@
                             <h6 id="messagebus-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                            <div class="row">
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
-                                        onclick="check_messagebus_service_status_m()"><i class="fas fa-sync"
-                                                                                         style="color: #3498db"></i>
-                                </button>
-                                <div style="width: 2px"></div>
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
-                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                            </div>
+                            <button class="btn btn-dark btn-xs" role="button" title="Refresh"
+                            onclick="check_messagebus_service_status_m()"><i class="fas fa-sync"
+                                                                             style="color: #3498db"></i>
+                            </button>
                         </div>
                     </div>
                     <hr style="">
                     <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                            <h6>Mycroft Skills</h6>
+                            <h6>Skills</h6>
                         </div>
                         <div class="col d-flex justify-content-center"><i id="status-skills"
                                                                           class="fa fa-times statusunticked"
@@ -186,21 +175,16 @@
                             <h6 id="skill-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                            <div class="row">
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
-                                        onclick="check_skills_service_status_m()"><i class="fas fa-sync"
-                                                                                     style="color: #3498db"></i>
-                                </button>
-                                <div style="width: 2px"></div>
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
-                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                            </div>
+                            <button class="btn btn-dark btn-xs" role="button" title="Refresh"
+                            onclick="check_skills_service_status_m()"><i class="fas fa-sync"
+                                                                         style="color: #3498db"></i>
+                            </button>
                         </div>
                     </div>
                     <hr style="">
                     <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                            <h6>Mycroft Audio</h6>
+                            <h6>Audio</h6>
                         </div>
                         <div class="col d-flex justify-content-center"><i id="status-audio"
                                                                           class="fa fa-times statusunticked"
@@ -209,20 +193,15 @@
                             <h6 id="audio-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                            <div class="row">
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
-                                        onclick="check_audio_service_status_m()"><i class="fas fa-sync"
-                                                                                    style="color: #3498db"></i></button>
-                                <div style="width: 2px"></div>
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
-                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                            </div>
+                            <button class="btn btn-dark btn-xs" role="button" title="Refresh"
+                            onclick="check_audio_service_status_m()"><i class="fas fa-sync"
+                                                                        style="color: #3498db"></i></button>
                         </div>
                     </div>
                     <hr style="">
                     <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                            <h6>Mycroft Voice</h6>
+                            <h6>Voice</h6>
                         </div>
                         <div class="col d-flex justify-content-center"><i id="status-voice"
                                                                           class="fa fa-times statusunticked"
@@ -231,37 +210,44 @@
                             <h6 id="voice-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                            <div class="row">
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
-                                        onclick="check_voice_service_status_m()"><i class="fas fa-sync"
-                                                                                    style="color: #3498db"></i></button>
-                                <div style="width: 2px"></div>
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
-                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                            </div>
+                            <button class="btn btn-dark btn-xs" role="button" title="Refresh"
+                            onclick="check_voice_service_status_m()"><i class="fas fa-sync"
+                                                                        style="color: #3498db"></i></button>
                         </div>
                     </div>
                     <hr style="">
                     <div class="row" style="">
                         <div class="col d-flex justify-content-start">
-                            <h6>Mycroft Enclosure</h6>
+                            <h6>PHAL</h6>
                         </div>
-                        <div class="col d-flex justify-content-center"><i id="status-enclosure"
+                        <div class="col d-flex justify-content-center"><i id="status-phal"
                                                                           class="fa fa-times statusunticked"
                                                                           aria-hidden="true"></i></div>
                         <div class="col d-flex justify-content-start">
-                            <h6 id="enclosure-pid">NA</h6>
+                            <h6 id="phal-pid">NA</h6>
                         </div>
                         <div class="col d-flex justify-content-start">
-                            <div class="row">
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="Refresh"
-                                        onclick="check_enclosure_service_status_m()"><i class="fas fa-sync"
-                                                                                        style="color: #3498db"></i>
-                                </button>
-                                <div style="width: 2px"></div>
-                                <button class="col-sm btn btn-dark btn-xs" role="button" title="View Log"><i
-                                        class="fas fa-file-alt" style="color: #f39c12"></i></button>
-                            </div>
+                            <button class="btn btn-dark btn-xs" role="button" title="Refresh"
+                            onclick="check_phal_service_status_m()"><i class="fas fa-sync"
+                                                                        style="color: #3498db"></i></button>
+                        </div>
+                    </div>
+                    <hr style="">
+                    <div class="row" style="">
+                        <div class="col d-flex justify-content-start">
+                            <h6>GUI</h6>
+                        </div>
+                        <div class="col d-flex justify-content-center"><i id="status-gui"
+                                                                          class="fa fa-times statusunticked"
+                                                                          aria-hidden="true"></i></div>
+                        <div class="col d-flex justify-content-start">
+                            <h6 id="gui-pid">NA</h6>
+                        </div>
+                        <div class="col d-flex justify-content-start">
+                            <button class="btn btn-dark btn-xs" role="button" title="Refresh"
+                            onclick="check_gui_service_status_m()"><i class="fas fa-sync"
+                                                                            style="color: #3498db"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

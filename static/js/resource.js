@@ -1,5 +1,41 @@
 $.postJSON = function(url, data, func){ $.post(url+(url.indexOf("?") == -1 ? "?" : "&")+"callback=?", data, func, "json");};
 
+var messagebus_process = {
+    "process_name": "NA",
+    "process_type": "NA",
+    "process_pid": "NA"
+}
+
+var skills_process = {
+    "process_name": "NA",
+    "process_type": "NA",
+    "process_pid": "NA"
+}
+
+var audio_process = {
+    "process_name": "NA",
+    "process_type": "NA",
+    "process_pid": "NA"
+}
+
+var voice_process = {
+    "process_name": "NA",
+    "process_type": "NA",
+    "process_pid": "NA"
+}
+
+var gui_process = {
+    "process_name": "NA",
+    "process_type": "NA",
+    "process_pid": "NA"
+}
+
+var phal_process = {
+    "process_name": "NA",
+    "process_type": "NA",
+    "process_pid": "NA"
+}
+
 $(function worker(){
     // don't cache ajax or content won't be fresh
     $.ajaxSetup ({
@@ -39,7 +75,7 @@ $(function check_messagebus_service_status(){
           setTimeout(check_messagebus_service_status, 10000);
         }
     });
-    $.post("/update/_check_process_status", { process: "mycroft.messagebus.service" },
+    $.post("/update/_check_process_status", { service: "messagebus" },
     function(data) {
         var e = document.getElementById("status-messagebus");
         var f = document.getElementById("messagebus-pid")
@@ -59,6 +95,9 @@ $(function check_messagebus_service_status(){
                 e.classList.add('statusunticked')
             }
         }
+        messagebus_process.process_type = data.process_type
+        messagebus_process.process_name = data.process_name
+        messagebus_process.process_pid = data.process_pid
     }, "json");
 });
 
@@ -69,7 +108,7 @@ $(function check_skills_service_status(){
           setTimeout(check_skills_service_status, 10000);
         }
     });
-    $.post("/update/_check_process_status", { process: "mycroft.skills" },
+    $.post("/update/_check_process_status", { service: "skills" },
     function(data) {
         var e = document.getElementById("status-skills");
         var f = document.getElementById("skill-pid")
@@ -89,6 +128,9 @@ $(function check_skills_service_status(){
                 e.classList.add('statusunticked')
             }
         }
+        skills_process.process_type = data.process_type
+        skills_process.process_name = data.process_name
+        skills_process.process_pid = data.process_pid
     }, "json");
 });
 
@@ -99,7 +141,7 @@ $(function check_audio_service_status(){
           setTimeout(check_audio_service_status, 10000);
         }
     });
-    $.post("/update/_check_process_status", { process: "mycroft.audio" },
+    $.post("/update/_check_process_status", { service: "audio" },
     function(data) {
         var e = document.getElementById("status-audio");
         var f = document.getElementById("audio-pid")
@@ -119,6 +161,9 @@ $(function check_audio_service_status(){
                 e.classList.add('statusunticked')
             }
         }
+        audio_process.process_type = data.process_type
+        audio_process.process_name = data.process_name
+        audio_process.process_pid = data.process_pid
     }, "json");
 });
 
@@ -129,7 +174,7 @@ $(function check_voice_service_status(){
           setTimeout(check_voice_service_status, 10000);
         }
     });
-    $.post("/update/_check_process_status", { process: "mycroft.client.speech" },
+    $.post("/update/_check_process_status", { service: "voice" },
     function(data) {
         var e = document.getElementById("status-voice");
         var f = document.getElementById("voice-pid")
@@ -149,20 +194,23 @@ $(function check_voice_service_status(){
                 e.classList.add('statusunticked')
             }
         }
+        voice_process.process_type = data.process_type
+        voice_process.process_name = data.process_name
+        voice_process.process_pid = data.process_pid
     }, "json");
 });
 
-$(function check_enclosure_service_status(){
+$(function check_gui_service_status(){
     $.ajaxSetup ({
         cache: false,
         complete: function() {
-          setTimeout(check_enclosure_service_status, 10000);
+          setTimeout(check_gui_service_status, 10000);
         }
     });
-    $.post("/update/_check_process_status", { process: "mycroft.client.enclosure" },
+    $.post("/update/_check_process_status", { service: "gui" },
     function(data) {
-        var e = document.getElementById("status-enclosure");
-        var f = document.getElementById("enclosure-pid")
+        var e = document.getElementById("status-gui");
+        var f = document.getElementById("gui-pid")
         f.innerHTML = data.process_pid
         if(data.process_running) {
             if (e.classList.contains('fa-times')) {
@@ -179,6 +227,42 @@ $(function check_enclosure_service_status(){
                 e.classList.add('statusunticked')
             }
         }
+        gui_process.process_type = data.process_type
+        gui_process.process_name = data.process_name
+        gui_process.process_pid = data.process_pid
+    }, "json");
+});
+
+$(function check_phal_service_status(){
+    $.ajaxSetup ({
+        cache: false,
+        complete: function() {
+          setTimeout(check_gui_service_status, 10000);
+        }
+    });
+    $.post("/update/_check_process_status", { service: "phal" },
+    function(data) {
+        var e = document.getElementById("status-phal");
+        var f = document.getElementById("phal-pid")
+        f.innerHTML = data.process_pid
+        if(data.process_running) {
+            if (e.classList.contains('fa-times')) {
+                e.classList.remove('fa-times')
+                e.classList.add('fa-check')
+                e.classList.remove('statusunticked')
+                e.classList.add('statusticked')
+            }
+        } else {
+            if (e.classList.contains('fa-check')) {
+                e.classList.remove('fa-check')
+                e.classList.add('fa-times')
+                e.classList.remove('statusticked')
+                e.classList.add('statusunticked')
+            }
+        }
+        phal_process.process_type = data.process_type
+        phal_process.process_name = data.process_name
+        phal_process.process_pid = data.process_pid
     }, "json");
 });
 
